@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @db_instance.name %>
+</p>
+
+<%= link_to 'Edit', edit_db_instance_path(@db_instance) %> |
+<%= link_to 'Back', db_instances_path %>

@@ -1,0 +1,2 @@
+class DbInstance < ApplicationRecord
+end

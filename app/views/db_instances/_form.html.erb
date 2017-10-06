@@ -1,0 +1,22 @@
+<%= form_with(model: db_instance, local: true) do |form| %>
+  <% if db_instance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(db_instance.errors.count, "error") %> prohibited this db_instance from being saved:</h2>
+
+      <ul>
+      <% db_instance.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :db_instance_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
