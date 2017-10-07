@@ -1,4 +1,4 @@
-# AWS Inventory Management
+# Cloud Inventory Management
 
 ## Rake Tasks
 
