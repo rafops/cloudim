@@ -1,24 +1,13 @@
-# README
+# AWS Inventory Management
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Rake Tasks
 
-Things you may want to cover:
+```
+rake instances:fetch[default,us-east-1]
+```
 
-* Ruby version
+ If you're using a zsh shell:
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ ```
+ rake instances:fetch\[default,us-east-1\]
+ ```
