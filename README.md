@@ -1,13 +1,21 @@
 # Cloud Inventory Management
 
-## Rake Tasks
+## Setup
 
 ```
-rake instances:fetch[default,us-east-1]
+bundle
+bin/rails db:setup
+bin/rails db:migrate
 ```
 
- If you're using a zsh shell:
+## Fetching Data
 
- ```
- rake instances:fetch\[default,us-east-1\]
- ```
+```
+bin/rake cloud_instance:fetch_all
+```
+
+## Testing
+
+```
+bin/rspec
+```
