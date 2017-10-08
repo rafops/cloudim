@@ -1,26 +1,20 @@
 class CloudInstancesListService < CloudInstancesService
 
-  def initialize(client: nil, **options)
-    @client = client || super(options)
-  end
-
   def call
-    response_hash(client.describe_instances)
+    to_h(client.describe_instances)
   end
 
   private
 
-  attr_reader :client
-
-  def response_hash(response)
+  def to_h(response)
     response.reservations.map do |reservation|
       reservation.instances.map do |instance|
-        ec2_instance_hash(instance)
+        instance_to_h(instance)
       end
     end.flatten
   end
 
-  def ec2_instance_hash(instance)
+  def instance_to_h(instance)
     { "name" => name_from_tags(instance.tags) }
   end
 

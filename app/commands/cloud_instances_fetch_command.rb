@@ -1,21 +1,32 @@
 class CloudInstancesFetchCommand
-  attr_reader :count
 
-  def initialize(service: nil, profile: nil, region: nil)
-    @service = service || CloudInstancesListService.new(profile: profile, region: region)
-    @count = 0
+  def initialize(profile: nil, 
+                 region: nil,
+                 cloud_instances_list_service: CloudInstancesListService,
+                 instance_model: Instance)
+    @profile = profile
+    @region = region
+    @cloud_instances_list_service = cloud_instances_list_service
+    @instance_model = instance_model
   end
   
   def call
-    instances = @service.call
-    instances.each do |instance|
-      unless Instance.find_by_name(instance["name"])
-        @count = @count + 1 if Instance.create(instance)
-      end
-    end
+    cloud_instances.call.map do |instance|
+      record = instance_model.find_or_initialize_by(name: instance["name"])
+      new_record = record.new_record?
+      record.update_attributes(instance)
+      record if new_record
+    end.compact
   end
 
   private
+  
+  attr_reader :profile,
+              :region,
+              :cloud_instances_list_service,
+              :instance_model
 
-  attr_reader :service
+  def cloud_instances
+    @cloud_instances ||= cloud_instances_list_service.new(profile: profile, region: region)
+  end
 end

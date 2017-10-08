@@ -1,8 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe CloudInstancesListService do
+RSpec.describe CloudInstancesListService do  
+  let(:client_class) { object_double("Aws::EC2::Client") }
   let(:client) { Aws::EC2::Client.new(stub_responses: true) }
-  subject { described_class.new(client: client) }
+  subject { described_class.new(client_class: client_class) }
+
+  before do
+    expect(client_class).to receive(:new).and_return(client)
+  end
 
   it "returns an empty array" do
     expect(subject.call).to eq []

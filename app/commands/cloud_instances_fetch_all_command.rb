@@ -1,39 +1,44 @@
 class CloudInstancesFetchAllCommand
-  attr_reader :count, :output
-
-  def initialize(output: nil)
-    @count = 0
-    @output = output
+  def initialize(cloud_instances_regions_list_service: CloudInstancesRegionsListService,
+                 cloud_instances_fetch_command: CloudInstancesFetchCommand,
+                 account_model: Account,
+                 logger: nil)
+    @cloud_instances_regions_list_service = cloud_instances_regions_list_service
+    @cloud_instances_fetch_command = cloud_instances_fetch_command
+    @account_model = account_model
+    @logger = logger
   end
   
   def call
-    profiles.each do |profile|
-      regions(profile: profile).each do |region|
+    profiles.map do |profile|
+      regions(profile: profile).map do |region|
         added = fetch(profile: profile, region: region)
-        @count = @count + added
-        output.print "added #{added} instances from profile #{profile} and region #{region}\n" if output
+        logger.info "added #{added.count} instances from profile #{profile} and region #{region}" if logger
+        added
       end
-    end
+    end.flatten
   end
 
   private
 
+  attr_reader :cloud_instances_regions_list_service,
+              :cloud_instances_fetch_command,
+              :account_model,
+              :logger
+
   def profiles
-    Account.pluck(:name)
+    account_model.pluck(:name)
   end
 
   def regions(profile:)
-    CloudInstancesService.new(profile: profile).regions
+    cloud_instances_regions_list_service.new(profile: profile).call
   end
 
   def fetch(profile:, region:)
-    command = CloudInstancesFetchCommand.new(
+    command = cloud_instances_fetch_command.new(
       profile: profile,
       region: region
     )
     command.call
-    command.count
   end
-
-  attr_reader :service
 end

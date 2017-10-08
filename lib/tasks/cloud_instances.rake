@@ -5,14 +5,14 @@ namespace :cloud_instances do
       profile: args[:profile],
       region: args[:region]
     )
-    command.call
-    puts "#{command.count} instances created"
+    created = command.call
+    puts "created #{created.count} instances"
   end
 
   desc "fetch all instances from all accounts and regions"
   task :fetch_all => [:environment] do
-    command = CloudInstancesFetchAllCommand.new(output: STDOUT)
-    command.call
-    puts "#{command.count} instances created"
+    command = CloudInstancesFetchAllCommand.new(logger: Logger.new(STDOUT))
+    created = command.call
+    puts "created #{created.count} instances"
   end
 end
