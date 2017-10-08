@@ -11,7 +11,7 @@ namespace :cloud_instances do
 
   desc "fetch all instances from all accounts and regions"
   task :fetch_all => [:environment] do
-    command = CloudInstancesFetchAllCommand.new
+    command = CloudInstancesFetchAllCommand.new(output: STDOUT)
     command.call
     puts "#{command.count} instances created"
   end

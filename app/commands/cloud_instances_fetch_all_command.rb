@@ -1,14 +1,17 @@
 class CloudInstancesFetchAllCommand
-  attr_reader :count
+  attr_reader :count, :output
 
-  def initialize
+  def initialize(output: nil)
     @count = 0
+    @output = output
   end
   
   def call
     profiles.each do |profile|
       regions(profile: profile).each do |region|
-        @count = @count + fetch(profile: profile, region: region)
+        added = fetch(profile: profile, region: region)
+        @count = @count + added
+        output.print "added #{added} instances from profile #{profile} and region #{region}\n" if output
       end
     end
   end
