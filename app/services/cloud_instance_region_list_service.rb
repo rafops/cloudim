@@ -1,4 +1,4 @@
-class CloudInstancesRegionsListService < CloudInstancesService
+class CloudInstanceRegionListService < CloudInstanceService
 
   def call
     to_a(client.describe_regions)

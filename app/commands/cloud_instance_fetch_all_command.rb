@@ -1,10 +1,10 @@
-class CloudInstancesFetchAllCommand
-  def initialize(cloud_instances_regions_list_service: CloudInstancesRegionsListService,
-                 cloud_instances_fetch_command: CloudInstancesFetchCommand,
+class CloudInstanceFetchAllCommand
+  def initialize(cloud_instance_region_list_service: CloudInstanceRegionListService,
+                 cloud_instance_fetch_command: CloudInstanceFetchCommand,
                  account_model: Account,
                  logger: nil)
-    @cloud_instances_regions_list_service = cloud_instances_regions_list_service
-    @cloud_instances_fetch_command = cloud_instances_fetch_command
+    @cloud_instance_region_list_service = cloud_instance_region_list_service
+    @cloud_instance_fetch_command = cloud_instance_fetch_command
     @account_model = account_model
     @logger = logger
   end
@@ -21,8 +21,8 @@ class CloudInstancesFetchAllCommand
 
   private
 
-  attr_reader :cloud_instances_regions_list_service,
-              :cloud_instances_fetch_command,
+  attr_reader :cloud_instance_region_list_service,
+              :cloud_instance_fetch_command,
               :account_model,
               :logger
 
@@ -31,11 +31,11 @@ class CloudInstancesFetchAllCommand
   end
 
   def regions(profile:)
-    cloud_instances_regions_list_service.new(profile: profile).call
+    cloud_instance_region_list_service.new(profile: profile).call
   end
 
   def fetch(profile:, region:)
-    command = cloud_instances_fetch_command.new(
+    command = cloud_instance_fetch_command.new(
       profile: profile,
       region: region
     )

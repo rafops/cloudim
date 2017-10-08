@@ -1,4 +1,4 @@
-class CloudInstancesListService < CloudInstancesService
+class CloudInstanceListService < CloudInstanceService
 
   def call
     to_h(client.describe_instances)

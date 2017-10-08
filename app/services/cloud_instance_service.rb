@@ -1,4 +1,4 @@
-class CloudInstancesService
+class CloudInstanceService
   protected
 
   attr_reader :profile, :region, :client_class, :credentials_class
