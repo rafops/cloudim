@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CloudComputeInstanceListService do
+RSpec.describe CloudInstancesListService do
   let(:client) { Aws::EC2::Client.new(stub_responses: true) }
   subject { described_class.new(client: client) }
 

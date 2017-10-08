@@ -1,4 +1,4 @@
-class CloudComputeInstanceListService < CloudComputeInstanceService
+class CloudInstancesListService < CloudInstancesService
 
   def initialize(client: nil, **options)
     @client = client || super(options)
