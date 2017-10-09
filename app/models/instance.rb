@@ -1,4 +1,4 @@
 class Instance < ApplicationRecord
-  include LatestScope
-  latest_scoped_by :name
+  include Versionable
+  versionable :name
 end

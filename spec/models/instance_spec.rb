@@ -1,6 +1,6 @@
 require 'rails_helper'
-require 'support/latest_scoped_by'
+require 'support/versionable'
 
 RSpec.describe Instance, type: :model do
-  include_examples "latest_scoped_by", "name"
+  include_examples "versionable", "name"
 end
