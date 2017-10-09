@@ -1,27 +1,54 @@
-<p id="notice"><%= notice %></p>
+<% content_for :sidebar do %>
+  <ul class="nav nav-pills flex-column">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">New</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Updates</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Removals</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">By Account</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">By Network</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Cost Control</a>
+    </li>
+  </ul>
+<% end %>
 
 <h1>Instances</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @instances.each do |instance| %>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= instance.name %></td>
-        <td><%= link_to 'Show', instance %></td>
-        <td><%= link_to 'Edit', edit_instance_path(instance) %></td>
-        <td><%= link_to 'Destroy', instance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Instance ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Account</th>
+        <th>Network</th>
+        <th>Status</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Instance', new_instance_path %>
+    </thead>
+    <tbody>
+      <% @instances.each do |instance| %>
+        <tr>
+          <td>i-00000000000000000</td>
+          <td><%= instance.name %></td>
+          <td>t2.small</td>
+          <td>default</td>
+          <td>us-east-1 vpc-00000000 subnet-00000000</td>
+          <td>New</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

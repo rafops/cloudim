@@ -1,4 +1,5 @@
 RSpec.shared_examples "versionable" do |identifier_column, version_column|
+
   version_column ||= "created_at"
 
   let(:five_days_ago)  { 5.days.ago }
@@ -34,7 +35,7 @@ RSpec.shared_examples "versionable" do |identifier_column, version_column|
         described_class.create(record)
       end
     end
-    
+
     it "only shows the head records" do
       is_expected.to match_array head_records
     end
@@ -53,4 +54,5 @@ RSpec.shared_examples "versionable" do |identifier_column, version_column|
       expect { records.each { |record| described_class.create(record) } }.to raise_error ActiveRecord::RecordNotUnique
     end
   end
+
 end

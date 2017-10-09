@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe CloudInstanceListService do  
+RSpec.describe CloudInstanceListService do
+
   let(:client_class) { object_double("Aws::EC2::Client") }
   let(:client) { Aws::EC2::Client.new(stub_responses: true) }
   subject { described_class.new(client_class: client_class).call }
@@ -39,4 +40,5 @@ RSpec.describe CloudInstanceListService do
       is_expected.to match_array listed_instances
     end
   end
+
 end

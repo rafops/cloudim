@@ -12,4 +12,7 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require jquery/dist/jquery
+//= require popper.js/dist/umd/popper
+//= require bootstrap-beta/dist/js/bootstrap.bundle
 //= require_tree .
