@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CloudInstanceRegionListService do  
   let(:client_class) { object_double("Aws::EC2::Client") }
   let(:client) { Aws::EC2::Client.new(stub_responses: true) }
-  subject { described_class.new(client_class: client_class) }
+  subject { described_class.new(client_class: client_class).call }
 
   before do
     expect(client_class).to receive(:new).and_return(client)
@@ -24,7 +24,7 @@ RSpec.describe CloudInstanceRegionListService do
     before { client.stub_responses(:describe_regions, data) }
 
     it "returns an array of regions" do
-      expect(subject.call).to eq [ "xx-west-1", "xx-east-2" ]
+      is_expected.to match_array [ "xx-west-1", "xx-east-2" ]
     end
   end
 end

@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe CloudInstanceListService do  
   let(:client_class) { object_double("Aws::EC2::Client") }
   let(:client) { Aws::EC2::Client.new(stub_responses: true) }
-  subject { described_class.new(client_class: client_class) }
+  subject { described_class.new(client_class: client_class).call }
 
   before do
     expect(client_class).to receive(:new).and_return(client)
   end
 
   it "returns an empty array" do
-    expect(subject.call).to eq []
+    is_expected.to be_empty
   end
 
   context "with existing instances" do
@@ -27,13 +27,16 @@ RSpec.describe CloudInstanceListService do
         }
       )
     end
-    before { client.stub_responses(:describe_instances, data) }
-
-    it "returns an array of instance model attributes" do
-      expect(subject.call).to eq [
+    let(:listed_instances) do
+      [
         { "name" => "primary" },
         { "name" => "secondary" }
       ]
+    end
+    before { client.stub_responses(:describe_instances, data) }
+
+    it "returns an array of instance model attributes" do
+      is_expected.to match_array listed_instances
     end
   end
 end
