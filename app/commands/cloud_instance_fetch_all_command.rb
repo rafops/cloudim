@@ -13,7 +13,7 @@ class CloudInstanceFetchAllCommand
     profiles.map do |profile|
       regions(profile: profile).map do |region|
         added = fetch(profile: profile, region: region)
-        logger.info "added #{added.count} instances from profile #{profile} and region #{region}" if logger
+        logger.info "added #{added.count} #{"instance".pluralize(added.count)} from profile #{profile} and region #{region}" if logger
         added
       end
     end.flatten
