@@ -3,7 +3,7 @@
 ## Setup
 
 ```bash
-bundle
+bundle && yarn
 bin/rails db:setup
 ```
 
