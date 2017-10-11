@@ -1,38 +1,35 @@
-RSpec.shared_examples "versionable" do |identifier_column, version_column|
+RSpec.shared_examples "versionable" do |**options|
 
-  version_column ||= "created_at"
-
-  let(:five_days_ago)  { 5.days.ago }
-  let(:four_days_ago)  { 4.days.ago }
-  let(:three_days_ago) { 3.days.ago }
-  let(:two_days_ago)   { 2.days.ago }
-  let(:one_day_ago)    { 1.day.ago  }
+  let(:identifier_column) { options[:identifier_column] || "id"            }
+  let(:version_column)    { options[:version_column]    || "created_at"    }
+  let(:model_scope)       { options[:model_scope]       || described_class }
+  let(:now)               { Time.now                                       }
 
   context "with historic records" do
     let(:records) do
       [
-        { "#{identifier_column}" => "item1", "#{version_column}" => five_days_ago  },
-        { "#{identifier_column}" => "item1", "#{version_column}" => three_days_ago },
-        { "#{identifier_column}" => "item1", "#{version_column}" => one_day_ago    },
-        { "#{identifier_column}" => "item2", "#{version_column}" => four_days_ago  },
-        { "#{identifier_column}" => "item2", "#{version_column}" => two_days_ago   }
+        { "#{identifier_column}" => "item1", "#{version_column}" => now + 5 },
+        { "#{identifier_column}" => "item1", "#{version_column}" => now + 3 },
+        { "#{identifier_column}" => "item1", "#{version_column}" => now + 1 },
+        { "#{identifier_column}" => "item2", "#{version_column}" => now + 4 },
+        { "#{identifier_column}" => "item2", "#{version_column}" => now + 2 }
       ]
     end
     let(:head_records) do
-      described_class
-        .where("#{version_column} >= ?", two_days_ago)
+      model_scope
+        .where("#{version_column} >= ?", now + 4)
         .limit(2)
         .pluck("#{identifier_column}", "#{version_column}")
     end
     subject do
-      described_class
+      model_scope
         .head
         .pluck("#{identifier_column}", "#{version_column}")
     end
 
     before do
       records.each do |record|
-        described_class.create(record)
+        model_scope.create(record)
       end
     end
 
@@ -44,14 +41,14 @@ RSpec.shared_examples "versionable" do |identifier_column, version_column|
   context "with records containing duplicated identifier and version columns" do
     let(:records) do
       [
-        { "#{identifier_column}" => "item1", "#{version_column}" => one_day_ago  },
-        { "#{identifier_column}" => "item2", "#{version_column}" => two_days_ago },
-        { "#{identifier_column}" => "item2", "#{version_column}" => two_days_ago }
+        { "#{identifier_column}" => "item1", "#{version_column}" => now + 1 },
+        { "#{identifier_column}" => "item2", "#{version_column}" => now + 2 },
+        { "#{identifier_column}" => "item2", "#{version_column}" => now + 2 }
       ]
     end
 
     it "prohibits duplicated records" do
-      expect { records.each { |record| described_class.create(record) } }.to raise_error ActiveRecord::RecordNotUnique
+      expect { records.each { |record| model_scope.create(record) } }.to raise_error ActiveRecord::RecordNotUnique
     end
   end
 

@@ -32,24 +32,24 @@ ActiveRecord::Schema.define(version: 20171011023650) do
   create_table "instances", force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "region", null: false
-    t.string "name", null: false
-    t.string "image_id", null: false
+    t.string "name", default: "", null: false
+    t.string "image_id", default: "", null: false
     t.string "instance_id", null: false
-    t.string "instance_type", null: false
-    t.string "key_name", null: false
-    t.string "private_dns_name", null: false
-    t.string "private_ip_address", null: false
-    t.string "public_dns_name", null: false
-    t.string "public_ip_address", null: false
-    t.string "state_transition_reason", null: false
-    t.string "subnet_id", null: false
-    t.string "vpc_id", null: false
-    t.string "architecture", null: false
-    t.string "client_token", null: false
-    t.string "hypervisor", null: false
-    t.string "root_device_name", null: false
-    t.string "root_device_type", null: false
-    t.string "virtualization_type", null: false
+    t.string "instance_type", default: "", null: false
+    t.string "key_name", default: "", null: false
+    t.string "private_dns_name", default: "", null: false
+    t.string "private_ip_address", default: "", null: false
+    t.string "public_dns_name", default: "", null: false
+    t.string "public_ip_address", default: "", null: false
+    t.string "state_transition_reason", default: "", null: false
+    t.string "subnet_id", default: "", null: false
+    t.string "vpc_id", default: "", null: false
+    t.string "architecture", default: "", null: false
+    t.string "client_token", default: "", null: false
+    t.string "hypervisor", default: "", null: false
+    t.string "root_device_name", default: "", null: false
+    t.string "root_device_type", default: "", null: false
+    t.string "virtualization_type", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "valid_until", default: "Infinity", null: false
