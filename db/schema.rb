@@ -10,28 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009035521) do
+ActiveRecord::Schema.define(version: 20171011023650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.string "profile", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_accounts_on_name", unique: true
   end
 
   create_table "db_instances", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "instances", force: :cascade do |t|
-    t.string "name"
+    t.integer "account_id", null: false
+    t.string "region", null: false
+    t.string "name", null: false
+    t.string "image_id", null: false
+    t.string "instance_id", null: false
+    t.string "instance_type", null: false
+    t.string "key_name", null: false
+    t.string "private_dns_name", null: false
+    t.string "private_ip_address", null: false
+    t.string "public_dns_name", null: false
+    t.string "public_ip_address", null: false
+    t.string "state_transition_reason", null: false
+    t.string "subnet_id", null: false
+    t.string "vpc_id", null: false
+    t.string "architecture", null: false
+    t.string "client_token", null: false
+    t.string "hypervisor", null: false
+    t.string "root_device_name", null: false
+    t.string "root_device_type", null: false
+    t.string "virtualization_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name", "created_at"], name: "index_instances_on_name_and_created_at", unique: true
+    t.datetime "valid_until", default: "Infinity", null: false
+    t.index ["account_id"], name: "index_instances_on_account_id"
+    t.index ["region"], name: "index_instances_on_region"
+    t.index ["instance_id", "valid_until"], name: "index_instances_on_instance_id_and_valid_until", unique: true
   end
 
 end

@@ -4,16 +4,7 @@
 
 ```bash
 bundle && yarn
-bin/rails db:setup
-```
-
-Populate accounts:
-
-```bash
-cat ~/.aws/credentials | \
-  grep "^\[.\+\]$" | \
-  sed s/"^\[\(.*\)]"/\\1/ | \
-  xargs bin/rails runner 'ARGV.each { |s| Account.find_or_create_by(name: s) }'
+bin/rails db:reset
 ```
 
 Fetch cloud data:

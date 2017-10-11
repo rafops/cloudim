@@ -11,11 +11,11 @@ class CloudInstanceFetchAllCommand
   end
 
   def call
-    profiles.map do |profile|
-      regions(profile: profile).map do |region|
-        added = fetch(profile: profile, region: region)
-        logger.info "added #{added.count} #{"instance".pluralize(added.count)} from profile #{profile} and region #{region}" if logger
-        added
+    accounts.map do |account|
+      regions(account: account).map do |region|
+        records = fetch(account: account, region: region)
+        logger.info "imported #{records.count} #{"instance".pluralize(records.count)} from account #{account.name} and region #{region}" if logger
+        records
       end
     end.flatten
   end
@@ -27,17 +27,17 @@ class CloudInstanceFetchAllCommand
                 :account_model,
                 :logger
 
-    def profiles
-      account_model.pluck(:name)
+    def accounts
+      account_model.all
     end
 
-    def regions(profile:)
-      cloud_instance_region_list_service.new(profile: profile).call
+    def regions(account:)
+      cloud_instance_region_list_service.new(profile: account.profile).call
     end
 
-    def fetch(profile:, region:)
+    def fetch(account:, region:)
       command = cloud_instance_fetch_command.new(
-        profile: profile,
+        account: account,
         region: region
       )
       command.call
