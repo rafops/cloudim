@@ -17,7 +17,8 @@ class CloudInstanceListService < CloudInstanceService
     "hypervisor",
     "root_device_name",
     "root_device_type",
-    "virtualization_type"
+    "virtualization_type",
+    "launch_time"
   ]
 
   def call
