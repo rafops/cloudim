@@ -30,11 +30,11 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th><%= link_to "Instance ID", params.permit(:search).merge(:sort => "instance_id") %></th>
-        <th><%= link_to "Name", params.permit(:search).merge(:sort => "name") %></th>
-        <th><%= link_to "Type", params.permit(:search).merge(:sort => "instance_type") %></th>
-        <th><%= link_to "Account", params.permit(:search).merge(:sort => "account_id") %></th>
-        <th><%= link_to "Network", params.permit(:search).merge(:sort => "region") %></th>
+        <th><%= sortable "instance_id", "Instance ID" %></th>
+        <th><%= sortable "name" %></th>
+        <th><%= sortable "instance_type", "Type" %></th>
+        <th><%= sortable "account_id", "Account" %></th>
+        <th><%= sortable "region", "Network" %></th>
         <th>Status</th>
       </tr>
     </thead>
