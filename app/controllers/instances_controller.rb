@@ -4,13 +4,15 @@ class InstancesController < ApplicationController
   # GET /instances
   # GET /instances.json
   def index
+    @instances = Instance.head
     if params[:search]
       term = "%#{params[:search]}%"
-      @instances = Instance.where("name like ? OR instance_id like ? OR public_ip_address like ? OR \
+      @instances = @instances.where("name like ? OR instances.instance_id like ? OR public_ip_address like ? OR \
       private_ip_address like ? OR public_dns_name like ? OR vpc_id like ? OR subnet_id like ?",\
       term, term, term, term, term, term, term)
-    else
-      @instances = Instance.head
+    end
+    if params[:sort]
+      @instances = @instances.order(params[:sort])
     end
   end
 
