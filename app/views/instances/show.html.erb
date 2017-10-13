@@ -1,9 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @instance.name %>
+  <% Instance.new.attributes.keys.each do |attr| %>
+  <strong><%= attr %>:</strong>
+  <%= @instance.send(attr) %><br>
+  <% end %>
 </p>
 
-<%= link_to 'Edit', edit_instance_path(@instance) %> |
 <%= link_to 'Back', instances_path %>

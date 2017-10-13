@@ -41,7 +41,7 @@
     <tbody>
       <% @instances.includes(:account).each do |instance| %>
         <tr>
-          <td><%= instance.instance_id %></td>
+          <td><%= link_to instance.instance_id, instance_path(instance) %></td>
           <td><%= instance.name %></td>
           <td><%= instance.instance_type %></td>
           <td><%= instance.account.name %></td>
