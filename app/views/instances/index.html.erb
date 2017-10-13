@@ -39,13 +39,13 @@
       </tr>
     </thead>
     <tbody>
-      <% @instances.each do |instance| %>
+      <% @instances.includes(:account).each do |instance| %>
         <tr>
-          <td>i-00000000000000000</td>
+          <td><%= instance.instance_id %></td>
           <td><%= instance.name %></td>
-          <td>t2.small</td>
-          <td>default</td>
-          <td>us-east-1 vpc-00000000 subnet-00000000</td>
+          <td><%= instance.instance_type %></td>
+          <td><%= instance.account.name %></td>
+          <td><%= instance.region %> <%= instance.vpc_id %> <%= instance.subnet_id %></td>
           <td>New</td>
         </tr>
       <% end %>
