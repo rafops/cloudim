@@ -8,8 +8,8 @@ class InstancesController < ApplicationController
     @instances = Instance.head
     if params[:search]
       term = "%#{params[:search]}%"
-      @instances = @instances.where("name like ? OR instances.instance_id like ? OR public_ip_address like ? OR \
-      private_ip_address like ? OR public_dns_name like ? OR vpc_id like ? OR subnet_id like ?",\
+      @instances = @instances.where("name ILIKE ? OR instances.instance_id ILIKE ? OR public_ip_address ILIKE ? OR \
+      private_ip_address ILIKE ? OR public_dns_name ILIKE ? OR vpc_id ILIKE ? OR subnet_id ILIKE ?",\
       term, term, term, term, term, term, term)
     end
     if params[:sort]
